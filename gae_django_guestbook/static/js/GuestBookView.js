@@ -31,6 +31,10 @@ define([
 		guestBookName: '1',
 		GreetingStore: '',
 
+		constructor: function () {
+			var url = "/api/guestbook/" + this.guestbookName + "/greeting/";
+		},
+
 		postCreate: function () {
 			this.inherited(arguments);
 			this.initGuestBook();

@@ -1,8 +1,8 @@
 DEFAULT_GUESTBOOK_NAME = 'default_guestbook'
 DEFAULT_CACHE_TIME = 3600 * 24 * 30
 DEFAULT_NUMBER_OF_GREETING = 10
-DEFAULT_SENDER_EMAIL = '<Default sender> nhathv.dev@gmail.com'
-DEFAULT_RECEIVER_EMAIL = '<Default receiver> nhathv.dev@gmail.com'
+DEFAULT_SENDER_EMAIL = '<Default sender> nhathv1.dev@gmail.com'
+DEFAULT_RECEIVER_EMAIL = '<Default receiver> nhathv1.dev@gmail.com'
 
 
 class AppConstants:

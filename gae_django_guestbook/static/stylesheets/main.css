@@ -33,7 +33,9 @@ border-radius: 4px;
   padding: 5px;
   border: 1px solid #888;
 }
-
+.inputGreeting{
+    /*display: none;*/
+}
 .greetingWidget{
   border-bottom: 1px solid #555;
   border-top: 1px solid #999;

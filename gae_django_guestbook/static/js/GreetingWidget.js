@@ -38,8 +38,8 @@ define([
 				this.id_greeting = obj.id_greeting || '';
 
 				if (dom.byId('isUserAdmin').value == 'True' || dom.byId('isUseLogin').value == obj.author) {
-				this.isEdit = true;
-			}
+					this.isEdit = true;
+				}
 			}
 
 			if (guestBookName) {
@@ -64,6 +64,8 @@ define([
 		},
 
 		editGreeting: function () {
+
+			domStyle.set(this.contentEditNode, "display", "inline-block");
 			this.displayEditForm(true);
 		},
 
@@ -74,10 +76,13 @@ define([
 
 		displayEditForm: function (display) {
 			////this.contentEditNode.set('readonly', !display);
-			domStyle.set(this.contentEditNode, "display", display ? "inline-block" : "none");
+			domStyle.set(this.editContent, "display", display ? "inline-block" : "none");
+			domStyle.set(this.lblContent, "display", display ? "none" : "inline-block");
+
 			domStyle.set(this.btnEdit, "display", display ? "none" : "inline-block");
 			domStyle.set(this.btnSave, "display", display ? "inline-block" : "none");
 			domStyle.set(this.btnCancel, "display", display ? "inline-block" : "none");
+
 
 		},
 
@@ -104,11 +109,47 @@ define([
 
 		deleteGreeting: function () {
 			var _greetingStore = new GreetingStore();
+			var url = '/api/guestbook/' + _this.guestBookName + '/greeting/';
 
+			var _this = this;
+			var isDelete = confirm("Do you want to delete this greeting?");
+			if (isDelete == true) {
+				_greetingStore._deleteGreeting({
+					guestBookName: _this.guestBookName,
+					id_greeting: _this.id_greeting
+				}, function (error, results) {
+					if (error) {
+						alert("Delete Greeting fail");
+					} else {
+						topic.publish("guestbook/topic", "loadList");
+					}
+				});
+			}
 		},
 
 		updateGreeting: function () {
-			
+			var _greetingStore = new GreetingStore();
+			var _this = this;
+			if (_this.contentEditNode.get('value').length > 0 && _this.contentEditNode.get('value').length <= 10) {
+				_greetingStore._updateGreeting({
+					guestBookName: _this.guestBookName,
+					id_greeting: _this.id_greeting,
+					textGreeting: _this.contentEditNode.get('value')
+				}, function (error, results) {
+					alert(error ? "Update Greeting fail" : "Update Greeting successful");
+					if (error) {
+						_this.contentEditNode.set('value', _this.content);
+					}
+					_this.lblContent.innerHTML = _this.contentEditNode.get('value');
+					_this.displayEditForm(false);
+
+					domStyle.set(_this.btnEdit, "display", "inline-block");
+					domStyle.set(_this.btnSave, "display", "none");
+					domStyle.set(_this.btnCancel, "display", "none");
+				});
+			} else {
+				alert("Character maximun is 10.");
+			}
 		}
 	});
 });

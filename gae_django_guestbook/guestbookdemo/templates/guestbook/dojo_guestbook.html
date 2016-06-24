@@ -3,51 +3,41 @@
 <head>
 	<title>Dojo guestbook</title>
 	<link rel="stylesheet"
-	      href="http://ajax.googleapis.com/ajax/libs/dojo/1.9.1/dijit/themes/claro/claro.css"/>
-	<link type="text/css" rel="stylesheet"
-	      href="/static/js/guestbook/widget/css/GreetingWidget.css"/>
+		  href="http://ajax.googleapis.com/ajax/libs/dojo/1.10.4/dijit/themes/claro/claro.css"/>
+    <link rel="stylesheet"
+		  href="/static/stylesheets/main.css"/>
 </head>
 <body>
-<h1>Guestbook</h1>
-<br>
-<a href="{{ url }}">{{ url_linktext }}</a>
-<br>
-<br>
-<div id="greetingContainer"></div>
-<!-- Configure Dojo -->
-<script>
-	var dojoConfig = (function () {
-		return {
-			async: true,
-			isDebug: true,
-			parseOnLoad: true,
-			packages: [{
-				name: "myGuestbook",
-				location: "/static/js/guestbook"
-			}]
-		};
-	})();
-</script>
-<div data-dojo-type="guestbook.GuestbookWidget"></div>
-<script src="//ajax.googleapis.com/ajax/libs/dojo/1.10.0/dojo/dojo.js"></script>
-<script type="text/javascript">
-	require([
-		"dojo/parser",
-		"dojo/_base/config",
-		"myGuestbook/widget/app",
-		"myGuestbook/widget/GuestbookWidget",
-		"dojo/domReady!"
-	], function (parser, config, app) {
-		if (!config.parseOnLoad) {
-			parser.parse();
-		}
-		app();
-	});
-</script>
-<br>
-<input id="is_user_admin" value="{{ is_user_admin }}" type="hidden"/>
-<input id="user_login" value="{{ user_login }}" type="hidden"/>
-<br>
-<input id="csrf" value="{{ csrf_token }}" type="hidden"/>
+<div  style="width: 900px;margin: 0 auto">
+        <h1 style="text-align: center">Namvv Dojo Demo</h1>
+        <br>
+        <p style="text-align: center"><a href="{{ url }}">{{ url_linktext }}</a></p>
+        <input type="hidden" id="isUseLogin" value="{{ user_login }}"/>
+        <input type="hidden" id="isUserAdmin" value="{{ is_user_admin }}"/>
+        <script>
+            var dojoConfig = {
+                async: true,
+                isDebug: true,
+                parseOnLoad: true,
+                packages: [{
+                    name: 'greeting',
+                    location: '/static/js'
+                }]
+            }
+        </script>
+
+        <!-- load dojo -->
+        <script src="//ajax.googleapis.com/ajax/libs/dojo/1.10.4/dojo/dojo.js"  ></script>
+        <script>
+            require([
+                "dojo/parser",
+                "greeting/GuestBookView"
+            ], function (parser) {
+                parser.parse();
+            });
+        </script>
+        <input id="csrf" value="{{ csrf_token }}" type="hidden">
+        <div data-dojo-type="greeting/GuestBookView"></div>
+    </div>
 </body>
 </html>
